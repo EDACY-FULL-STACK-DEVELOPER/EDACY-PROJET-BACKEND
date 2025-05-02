@@ -3,7 +3,27 @@ const app = express()
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3000;
 require('dotenv').config();
+const cors = require("cors");
 
+// Utilisation de CORS et express.json() pour gérer les requêtes
+const corsOptions = {
+    origin: [
+      "http://localhost:3000",
+    ],
+    credentials: true,
+    allowedHeaders: [
+      "Origin",
+      "X-Requested-With",
+      "Content-Type",
+      "Accept",
+      "Authorization",
+      "sessionId",
+    ],
+    exposedHeaders: ["sessionId"],
+    methods: "GET,PUT,POST,DELETE",
+    preflightContinue: false,
+  };
+app.use(cors(corsOptions));
 // parseur pour parser le json
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true })); 
@@ -17,15 +37,15 @@ mongoose.connect(MONGO_URI)
         console.log("🔴 Erreur de connexion à MongoDB:", err);
         process.exit(1);
     });
-
-app.get('/', (req, res) => {
-  res.send('Bienvenue sur le serveur de Samba!')
-})
-
+    
 // Routes de l'API 
 const authRoutes = require('./routes/authRoutes');
 // Utilisation des routes
 app.use('/api/auth', authRoutes);
+
+app.get('/', (req, res) => {
+  res.send('Bienvenue sur le serveur de Samba!')
+})
 app.listen(PORT, () => {
   console.log(`🚀 Serveur démarré sur le port ${PORT}`)
 })
