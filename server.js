@@ -40,8 +40,10 @@ mongoose.connect(MONGO_URI)
     
 // Routes de l'API 
 const authRoutes = require('./routes/authRoutes');
+const itemRoutes = require('./routes/itemRoutes');
 // Utilisation des routes
 app.use('/api/auth', authRoutes);
+app.use('/api/item', itemRoutes);
 
 app.get('/', (req, res) => {
   res.send('Bienvenue sur le serveur de Samba!')
