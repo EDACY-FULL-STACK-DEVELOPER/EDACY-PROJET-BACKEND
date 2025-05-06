@@ -8,7 +8,7 @@ const cors = require("cors");
 // Utilisation de CORS et express.json() pour gérer les requêtes
 const corsOptions = {
     origin: [
-      "http://localhost:3000",
+      "http://localhost:4200",
     ],
     credentials: true,
     allowedHeaders: [
